@@ -1,2 +1,2 @@
 #!/bin/bash
-cd $OLDPWD
+./previous_directory.sh
