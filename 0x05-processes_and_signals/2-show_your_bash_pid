@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Displays lines containing the bash word
+# grep - Search specific word and execute
+ps -aufx | grep bash
