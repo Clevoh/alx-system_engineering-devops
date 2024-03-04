@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#server or login commands
+
+#setting up server SSH-agent
+eval $("ssh-agent")
+
+#path to identify file
+ssh-add ~/.ssh/id_rsa
+
+#username and ip address
+ssh ubuntu@54.237.227.8
