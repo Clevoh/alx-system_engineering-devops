@@ -4,21 +4,15 @@
 exec { 'fix -- for nginx':
   # modify the ULIMIT value
   command => '/bin/sed -i "s/15/4096/" /etc/default/nginx',
-  # Specify the path for the sed command
-  path    => ['/usr/local/bin/', '/bin/'],
+  # Specify the correct path for the sed command
+  path    => '/bin/',
+  # Ensure that the command only runs when necessary
+  unless  => '/bin/grep -q "ulimit -n 4096" /etc/default/nginx',
 }
 
 # Restart Nginx
 service { 'nginx':
   ensure  => running,
   enable  => true,
-}
-
-exec { 'nginx_restart':
-  # Restart nginx services,
-  command => '/etc/init.d/nginx restart',
-  # Specify the path for init.d command
-  path    => ['/etc/init.d'],
-  # Notify the Nginx service to restart when the exec runs
-  notify  => Service['nginx'],
+  require => Exec['fix -- for nginx'],  # Ensure Nginx is restarted only after ULIMIT is modified
 }
